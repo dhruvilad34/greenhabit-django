@@ -1,0 +1,55 @@
+{% extends "tracker/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Decorative elements -->
+            <div class="position-relative mb-5">
+                <div class="position-absolute animate-float" style="top: -15px; left: 10%; width: 25px; height: 25px; background-color: var(--primary-light); opacity: 0.2; border-radius: 50%;"></div>
+                <div class="position-absolute animate-float-delay" style="bottom: 10px; right: 15%; width: 20px; height: 20px; background-color: var(--accent); opacity: 0.15; border-radius: 50%;"></div>
+                
+                <h1 class="text-center display-5 animate-fade-in">
+                    <span class="badge bg-success rounded-pill mb-3">🎯</span>
+                    <span class="text-success">Submit</span> a New Goal
+                </h1>
+                <p class="text-center text-muted animate-slide-up">Share your eco-friendly goal with the community</p>
+            </div>
+            
+            <div class="card shadow-sm border-success animate-slide-up-delay">
+                <div class="card-body p-4">
+                    <form method="post" class="goal-form">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3 form-field-animate" style="animation-delay: calc({{ forloop.counter0 }} * 0.1s + 0.5s);">
+                                <label for="{{ field.id_for_label }}" class="form-label text-success fw-bold">{{ field.label }}</label>
+                                {{ field.errors }}
+                                {% if field.name == 'description' %}
+                                    <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" rows="5">{{ field.value|default:'' }}</textarea>
+                                {% elif field.name == 'category' %}
+                                    <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-select select-animate">
+                                        {% for value, text in field.field.choices %}
+                                            <option value="{{ value }}" {% if field.value == value %}selected{% endif %}>
+                                                {% if value == 'waste' %}♻️{% elif value == 'energy' %}💡{% elif value == 'transport' %}🚲{% elif value == 'food' %}🥗{% endif %} {{ text }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" value="{{ field.value|default:'' }}">
+                                {% endif %}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="text-center mt-4 form-field-animate" style="animation-delay: 0.8s;">
+                            <button class="btn btn-success btn-lg pulse-on-hover px-5">
+                                <i class="bi bi-check-circle me-2"></i>Submit Goal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

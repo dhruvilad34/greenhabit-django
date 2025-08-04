@@ -1,0 +1,71 @@
+{% extends "tracker/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Decorative elements -->
+            <div class="position-absolute animate-float" style="top: 80px; right: 15%; width: 25px; height: 25px; background-color: var(--primary-light); opacity: 0.15; border-radius: 50%;"></div>
+            <div class="position-absolute animate-float-delay" style="bottom: 120px; left: 20%; width: 20px; height: 20px; background-color: var(--accent); opacity: 0.1; border-radius: 50%;"></div>
+            
+            <div class="text-center mb-4 animate-fade-in">
+                <h1 class="display-5">
+                    <span class="badge bg-success rounded-pill mb-3">
+                        <i class="bi bi-pencil-square"></i>
+                    </span>
+                    <span class="text-success">Edit</span> Your Profile
+                </h1>
+                <p class="text-muted">Customize your profile information</p>
+            </div>
+            
+            <div class="card shadow-sm border-success animate-slide-up">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data" class="profile-form">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-4 form-field-animate" style="animation-delay: calc({{ forloop.counter0 }} * 0.1s + 0.3s);">
+                                <label for="{{ field.id_for_label }}" class="form-label text-success fw-bold">
+                                    {% if field.name == 'bio' %}
+                                        <i class="bi bi-chat-quote me-1"></i>
+                                    {% elif field.name == 'profile_image' %}
+                                        <i class="bi bi-image me-1"></i>
+                                    {% else %}
+                                        <i class="bi bi-card-text me-1"></i>
+                                    {% endif %}
+                                    {{ field.label }}
+                                </label>
+                                {{ field.errors }}
+                                
+                                {% if field.name == 'bio' %}
+                                    <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" rows="5">{{ field.value|default:'' }}</textarea>
+                                {% elif field.name == 'profile_image' %}
+                                    <div class="input-group">
+                                        <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control">
+                                        <label class="input-group-text" for="{{ field.id_for_label }}">
+                                            <i class="bi bi-upload"></i>
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" value="{{ field.value|default:'' }}">
+                                {% endif %}
+                                
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        
+                        <div class="d-flex justify-content-between mt-4 form-field-animate" style="animation-delay: 0.7s;">
+                            <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Profile
+                            </a>
+                            <button class="btn btn-success pulse-on-hover">
+                                <i class="bi bi-check-circle me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

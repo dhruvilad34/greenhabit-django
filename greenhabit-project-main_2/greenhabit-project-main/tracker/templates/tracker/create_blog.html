@@ -1,0 +1,114 @@
+{% extends "tracker/base.html" %}
+{% block content %}
+<!-- Hero Section -->
+<section class="py-4" style="background: linear-gradient(135deg, #2E8B57 0%, #3CB371 100%);">
+    <div class="container text-center text-white">
+        <h1 class="display-5 fw-bold mb-2">✍️ Create New Blog Post</h1>
+        <p class="lead mb-0">Share your sustainability journey with the community</p>
+    </div>
+</section>
+
+<!-- Create Blog Form -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-success text-white text-center">
+                        <h3 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Write Your Story</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-card-heading text-success me-2"></i>Blog Title
+                                </label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                    <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.content.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-file-text text-success me-2"></i>Content
+                                </label>
+                                {{ form.content }}
+                                {% if form.content.errors %}
+                                    <div class="text-danger small mt-1">{{ form.content.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.image.id_for_label }}" class="form-label fw-bold">
+                                    <i class="bi bi-image text-success me-2"></i>Featured Image (Optional)
+                                </label>
+                                {{ form.image }}
+                                {% if form.image.errors %}
+                                    <div class="text-danger small mt-1">{{ form.image.errors }}</div>
+                                {% endif %}
+                                <div class="form-text">Upload an image to make your blog post more engaging</div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'blog_list' %}" class="btn btn-outline-secondary btn-lg px-4">
+                                    <i class="bi bi-arrow-left me-2"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-success btn-lg px-4 hover-shadow">
+                                    <i class="bi bi-check-circle me-2"></i>Publish Post
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+{{ form.title.as_widget }}
+{{ form.content.as_widget }}
+{{ form.image.as_widget }}
+
+#id_title {
+    @extend .form-control;
+    @extend .form-control-lg;
+}
+
+#id_content {
+    @extend .form-control;
+    min-height: 200px;
+}
+
+#id_image {
+    @extend .form-control;
+}
+</style>
+
+<script>
+// Add Bootstrap classes to form fields
+document.addEventListener('DOMContentLoaded', function() {
+    const titleField = document.getElementById('id_title');
+    const contentField = document.getElementById('id_content');
+    const imageField = document.getElementById('id_image');
+    
+    if (titleField) {
+        titleField.className = 'form-control form-control-lg';
+        titleField.placeholder = 'Enter an engaging title for your blog post...';
+    }
+    
+    if (contentField) {
+        contentField.className = 'form-control';
+        contentField.style.minHeight = '200px';
+        contentField.placeholder = 'Share your sustainability story, tips, or experiences...';
+    }
+    
+    if (imageField) {
+        imageField.className = 'form-control';
+    }
+});
+</script>
+{% endblock %}
