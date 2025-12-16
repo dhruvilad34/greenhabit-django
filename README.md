@@ -1,16 +1,17 @@
 # GreenHabit 🌱
 
-GreenHabit is a Django-based web application focused on encouraging eco-friendly habits and sustainable living. The project is built using Django for the backend and standard web technologies for the frontend, with an emphasis on clean structure and ease of use.
+GreenHabit is a Django-based full-stack web application focused on promoting eco-friendly habits and sustainable living. The project includes habit tracking features, user interaction, and media support, built with a clean and modular Django architecture.
 
 
 
 ## Features
 
-- Clean and simple interface
-- Django-based backend architecture
-- Modular and maintainable code structure
-- Sustainability-focused application concept
-- Easy to extend with additional features
+- User authentication
+- Eco-friendly habit and goal tracking
+- Blog-style posts with likes and comments
+- Media file uploads
+- Bootstrap-based responsive UI
+- Modular Django app structure
 
 
 
@@ -21,6 +22,7 @@ GreenHabit is a Django-based web application focused on encouraging eco-friendly
 - HTML
 - CSS
 - JavaScript
+- Bootstrap
 - SQLite
 - Git
 
@@ -30,13 +32,18 @@ GreenHabit is a Django-based web application focused on encouraging eco-friendly
 
 ```
 greenhabit-django/
-├── manage.py
-├── greenhabit/
-├── app/
-├── templates/
-├── static/
-├── db.sqlite3
-└── requirements.txt
+│
+├── greenhabit-project-main_2/
+│   └── greenhabit-project-main/
+│       ├── greenhabit/      # Django project settings
+│       ├── tracker/         # Habit tracking app
+│       ├── media/           # Uploaded files
+│       ├── manage.py
+│       └── urls.py
+│
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
 
@@ -52,16 +59,21 @@ greenhabit-django/
 
 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/greenhabit-django.git
+git clone https://github.com/dhruvilad34/greenhabit-django.git
 cd greenhabit-django
 ```
 
-2. Create a virtual environment
+2. Navigate to the Django project directory
+```bash
+cd greenhabit-project-main_2/greenhabit-project-main
+```
+
+3. Create a virtual environment
 ```bash
 python -m venv venv
 ```
 
-3. Activate the virtual environment
+4. Activate the virtual environment
 
 macOS / Linux:
 ```bash
@@ -73,22 +85,22 @@ Windows:
 venv\Scripts\activate
 ```
 
-4. Install dependencies
+5. Install dependencies
 ```bash
-pip install -r requirements.txt
+pip install -r ../../requirements.txt
 ```
 
-5. Run database migrations
+6. Apply database migrations
 ```bash
 python manage.py migrate
 ```
 
-6. Start the development server
+7. Run the development server
 ```bash
 python manage.py runserver
 ```
 
-7. Open the application in your browser
+8. Open the application in your browser
 ```
 http://127.0.0.1:8000/
 ```
@@ -97,9 +109,11 @@ http://127.0.0.1:8000/
 
 ## Usage
 
-- Run the application locally
-- Navigate through the web interface
-- Modify or extend features using Django views and templates
+- Register or log in as a user
+- Track eco-friendly habits and goals
+- Create and interact with posts
+- Upload and manage media files
+
 
 
 
